@@ -22,9 +22,7 @@ class Navbar extends React.Component {
             }}
           >
             <i className="fas fa-mobile-alt fa-2x logoSwagger" />{' '}
-            <span style={{ marginLeft: '15px' }}>
-              The Swaggin' Shop (intimate API demo)
-            </span>
+            <span style={{ marginLeft: '15px' }}>The Swaggin' Shop</span>
           </NavLink>
 
           <a
