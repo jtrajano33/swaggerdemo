@@ -23,5 +23,14 @@ const makeSelectTransactionPut = () =>
     substate.get('transactionPayload'),
   );
 
+const makeSelectModeOfPayment = () =>
+  createSelector(selectCheckoutDomain, substate =>
+    substate.get('modeOfPayment'),
+  );
+
 export default makeSelectCheckout;
-export { selectCheckoutDomain, makeSelectTransactionPut };
+export {
+  selectCheckoutDomain,
+  makeSelectTransactionPut,
+  makeSelectModeOfPayment,
+};

@@ -1,10 +1,11 @@
-import { takeEvery, call, select } from 'redux-saga/effects';
+import { takeEvery, call, select, put } from 'redux-saga/effects';
 import { put as putRequest } from 'utils/api';
 import { TRANSACTION_CURRENCY } from './constants';
 
 import { makeSelectTransactionPut } from './selectors';
 import { makeSelectAccessToken } from '../Cart/selectors';
 import history from '../../utils/history';
+import { modeOfPayment } from './actions';
 
 function* confirmTransactionPut() {
   const data = yield select(makeSelectTransactionPut());
@@ -23,7 +24,8 @@ function* confirmTransactionPut() {
   };
 
   try {
-    yield call(putRequest, url, currency, headerPostQueue);
+    const paymentData = yield call(putRequest, url, currency, headerPostQueue);
+    yield put(modeOfPayment(paymentData.data.data));
     yield call(history.push, `/thankyou`);
   } catch (e) {
     console.log(e);
