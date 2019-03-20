@@ -54,7 +54,10 @@ export class ThankYouPage extends React.Component {
 
           <div className="columns">
             <div className="column is-4 is-offset-4">
-              <div className="box" style={{ marginTop: '30px' }}>
+              <div
+                className="box"
+                style={{ marginTop: '30px', marginBottom: '100px' }}
+              >
                 <div className="has-text-centered">
                   <i className="fas fa-check-circle fa-9x thankYouApproved" />
                 </div>

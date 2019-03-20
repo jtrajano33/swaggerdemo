@@ -21,11 +21,6 @@ const GlobalStyle = createGlobalStyle`
     min-width: 100%;
   }
 
-  // p,
-  // label {
-  //   font-family: Georgia, Times, 'Times New Roman', serif;
-  //   line-height: 1.5em;
-  // }
 
   .selectedItem:hover{
     transform: scale(1.05);
@@ -44,6 +39,7 @@ const GlobalStyle = createGlobalStyle`
   .selectedButton:hover{
     transform: scale(1.05);
     letter-spacing: 2px;
+    background-color: rgba(0,150,0,1) !important;
   }
 
   .navbar-burger {
