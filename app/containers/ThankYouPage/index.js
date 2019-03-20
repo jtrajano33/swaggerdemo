@@ -18,17 +18,22 @@ import reducer from './reducer';
 import saga from './saga';
 import Navbar from '../SwaggerHome/components/Navbar';
 import Footer from '../SwaggerHome/components/Footer';
-import { makeSelectOrderDetails } from '../Cart/selectors';
 import { makeSelectModeOfPayment } from '../Checkout/selectors';
+import { getQrCode as _getQrCode } from './actions';
 /* eslint-disable react/prefer-stateless-function */
 export class ThankYouPage extends React.Component {
+  componentDidMount() {
+    this.props.getQrCode(this.props.modeOfPayment.walletAddress);
+  }
+
   render() {
-    const { orderDetails, modeOfPayment } = this.props;
+    const { modeOfPayment, thankYouPage } = this.props;
+
+    const { qrcode } = thankYouPage;
 
     let paymentGatewayValue;
 
     if (!modeOfPayment) {
-      // return <div>No transaction</div>
       window.location.href = '/';
     } else {
       const paymentGateway = modeOfPayment.totalAmounts.filter(
@@ -71,13 +76,19 @@ export class ThankYouPage extends React.Component {
                       <input
                         className="input"
                         disabled
-                        value={orderDetails.walletAddress}
+                        value={modeOfPayment.walletAddress}
                       />
                       <p style={{ margin: '10px 0px' }}>Amount to pay:</p>
                       <input
                         className="input"
                         disabled
                         value={paymentGatewayValue}
+                      />
+                      <p style={{ margin: '10px 0px' }}>QR Code:</p>
+                      <img
+                        src={qrcode}
+                        style={{ border: '1px solid black' }}
+                        alt="qrcode"
                       />
                     </strong>
                   </div>
@@ -96,18 +107,21 @@ export class ThankYouPage extends React.Component {
 }
 
 ThankYouPage.propTypes = {
-  orderDetails: PropTypes.object,
+  thankYouPage: PropTypes.object,
   modeOfPayment: PropTypes.object,
+  getQrCode: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   thankYouPage: makeSelectThankYouPage(),
-  orderDetails: makeSelectOrderDetails(),
   modeOfPayment: makeSelectModeOfPayment(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
+    getQrCode: qrcode => {
+      dispatch(_getQrCode(qrcode));
+    },
     dispatch,
   };
 }
